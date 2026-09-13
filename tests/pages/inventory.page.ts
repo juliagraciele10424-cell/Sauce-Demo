@@ -1,19 +1,16 @@
 import { type Locator, type Page, expect } from '@playwright/test';
 import { BasePage } from './base.page';
+import { SideMenuComponent } from '../components/side-menu.component';
 
 export class InventoryPage extends BasePage {
   readonly burgerButton: Locator;
-  readonly sideMenu: Locator;
-  readonly inventoryLink: Locator;
-  readonly logoutLink: Locator;
+  readonly sideMenu: SideMenuComponent;
 
   constructor(page: Page) {
     super(page);
 
     this.burgerButton = page.getByRole('button', { name: 'Open Menu' });
-    this.sideMenu = page.locator('.bm-menu-wrap');
-    this.inventoryLink = page.getByText('All Items');
-    this.logoutLink = page.getByText('Logout');
+    this.sideMenu = new SideMenuComponent(page);
   }
 
   async open(): Promise<void> {
@@ -30,13 +27,20 @@ export class InventoryPage extends BasePage {
   }
 
   async expectMenuOpen(): Promise<void> {
-    await expect(this.sideMenu).toBeVisible();
-    await expect(this.inventoryLink).toBeVisible();
+    await this.sideMenu.expectOpen();
+  }
+
+  async openDynamicCatalog(): Promise<void> {
+    await this.sideMenu.openDynamicCatalog();
+  }
+
+  async expectDynamicCatalogSubmenuOpen(): Promise<void> {
+    await this.sideMenu.expectDynamicCatalogSubmenuOpen();
   }
 
   async logout(): Promise<void> {
     await this.openMenu();
-    await this.logoutLink.click();
+    await this.sideMenu.logoutLink.click();
   }
 
   async expectLoggedOut(): Promise<void> {

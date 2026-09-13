@@ -22,6 +22,8 @@ tests/
     base.page.ts
     inventory.page.ts
     login.page.ts
+  components/
+    side-menu.component.ts
   specs/
     login.spec.ts
 ```
@@ -90,6 +92,7 @@ Atualmente, os testes cobrem:
 - Login com credenciais validas
 - Validacao da pagina de inventario
 - Abertura do menu lateral na pagina de inventario
+- Abertura do submenu Dynamic Catalog com opcoes na horizontal
 - Logout pelo menu lateral
 
 ## Credenciais
