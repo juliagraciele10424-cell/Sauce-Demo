@@ -95,6 +95,24 @@ Atualmente, os testes cobrem:
 - Abertura do submenu Dynamic Catalog com opcoes na horizontal
 - Logout pelo menu lateral
 
+### Explicacao Dos Testes
+
+#### Login com credenciais validas
+
+Valida que a pagina inicial de login carrega corretamente, preenche usuario e senha validos e confirma que o usuario e redirecionado para a pagina de inventario. Ao final, tambem verifica se o texto `Products` esta visivel, indicando que o acesso foi concluido com sucesso.
+
+#### Abertura do menu lateral
+
+Valida que, apos o login, a pagina de inventario esta carregada e o botao de menu no canto superior esquerdo pode ser acionado. Depois do clique, o teste confirma que o menu lateral abriu e que o link `All Items` esta visivel.
+
+#### Logout pelo menu lateral
+
+Valida o fluxo de saida da aplicacao. O teste faz login, abre a pagina de inventario, aciona o logout pelo menu lateral e confirma que o usuario voltou para a pagina de login, verificando a URL e o campo `Username`.
+
+#### Submenu Dynamic Catalog
+
+Valida que, com o menu lateral ja aberto, o clique em `Dynamic Catalog` expande um submenu. O teste confirma que o submenu fica visivel, que o item principal recebe `aria-expanded="true"` e que os tres links `Lazy Load`, `Spinner` e `Slider` aparecem alinhados na horizontal.
+
 ## Credenciais
 
 As credenciais usadas nos testes estao centralizadas em `tests/fixtures/auth.fixture.ts`:
