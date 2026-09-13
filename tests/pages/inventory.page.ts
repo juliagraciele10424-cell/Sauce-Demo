@@ -5,13 +5,15 @@ export class InventoryPage extends BasePage {
   readonly burgerButton: Locator;
   readonly sideMenu: Locator;
   readonly inventoryLink: Locator;
+  readonly logoutLink: Locator;
 
   constructor(page: Page) {
     super(page);
 
     this.burgerButton = page.getByRole('button', { name: 'Open Menu' });
     this.sideMenu = page.locator('.bm-menu-wrap');
-    this.inventoryLink = page.getByRole('link', { name: 'All Items' });
+    this.inventoryLink = page.getByText('All Items');
+    this.logoutLink = page.getByText('Logout');
   }
 
   async open(): Promise<void> {
@@ -30,5 +32,15 @@ export class InventoryPage extends BasePage {
   async expectMenuOpen(): Promise<void> {
     await expect(this.sideMenu).toBeVisible();
     await expect(this.inventoryLink).toBeVisible();
+  }
+
+  async logout(): Promise<void> {
+    await this.openMenu();
+    await this.logoutLink.click();
+  }
+
+  async expectLoggedOut(): Promise<void> {
+    await expect(this.page).toHaveURL(/https:\/\/www\.saucedemo\.com\//);
+    await expect(this.page.getByPlaceholder('Username')).toBeVisible();
   }
 }

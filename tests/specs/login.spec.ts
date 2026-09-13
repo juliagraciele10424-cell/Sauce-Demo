@@ -9,9 +9,22 @@ test('dado que estou na página base quando uso as credenciais de acesso então 
   await expect(loginPage.page.getByText('Products')).toBeVisible();
 });
 
-test('dado que estou na página /inventory.html quando clico no burguer button no lado superior esquerdo então se abre um menu da lateral esquerda', async ({ inventoryPage }) => {
-  await inventoryPage.open();
+test('dado que estou na página /inventory.html quando clico no burguer button no lado superior esquerdo então se abre um menu da lateral esquerda', async ({ loginPage, inventoryPage }) => {
+  await loginPage.open();
+  await loginPage.loginWith({ username: 'problem_user', password: 'secret_sauce' });
+  await loginPage.expectLoggedIn();
+
   await inventoryPage.expectLoaded();
   await inventoryPage.openMenu();
   await inventoryPage.expectMenuOpen();
+});
+
+test('dado que estou na página /inventory.html quando clico em logout no menu lateral então retorno para a página de login', async ({ loginPage, inventoryPage }) => {
+  await loginPage.open();
+  await loginPage.loginWith({ username: 'problem_user', password: 'secret_sauce' });
+  await loginPage.expectLoggedIn();
+
+  await inventoryPage.expectLoaded();
+  await inventoryPage.logout();
+  await inventoryPage.expectLoggedOut();
 });
